@@ -25,7 +25,7 @@ CREATE TABLE wilson_db.resident (
   habits VARCHAR(10000) NULL,
   extra_info VARCHAR(10000) NULL,
   id_rsa INT UNSIGNED NULL,
-  id INT UNSIGNED NOT NULL,
+  cod_utente INT UNSIGNED NOT NULL,
   PRIMARY KEY (id),
   INDEX FK_resident_rsa_idx (id_rsa ASC),
   CONSTRAINT FK_resident_rsa FOREIGN KEY (id_rsa) REFERENCES wilson_db.rsa (id) ON DELETE NO ACTION ON UPDATE CASCADE
