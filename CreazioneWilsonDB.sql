@@ -21,6 +21,7 @@ CREATE TABLE wilson_db.resident (
   picture VARCHAR(100) NULL,
   birthday DATE NULL,
   birthplace VARCHAR(100) NULL,
+  gender ENUM('male', 'female') NULL,
   biography VARCHAR(10000) NULL,
   habits VARCHAR(10000) NULL,
   extra_info VARCHAR(10000) NULL,
