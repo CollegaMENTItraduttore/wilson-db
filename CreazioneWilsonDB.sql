@@ -222,9 +222,9 @@ CREATE TABLE wilson_db.event_type(
   description VARCHAR(1000) NULL COMMENT "Description of the event type",
   explanation VARCHAR(1000) NULL COMMENT "Default explanation of the event type",
   id_category INT UNSIGNED NULL COMMENT "Category of the event type, used for grouping events",
-  startDate TIMESTAMP NULL COMMENT "Date the event type started to be in effect",
-  repeatsEvery ENUM ('daily','weekly','monthly','yearly') COMMENT "Frequency at which the event takes place",
-  repeatsOn VARCHAR(50) COMMENT "Days the event is repeated in a week. Verranno inseriti nel DB il numero del giorno separato da ;",
+  start_date TIMESTAMP NULL COMMENT "Date the event type started to be in effect",
+  repeats_every ENUM ('daily','weekly','monthly','yearly') COMMENT "Frequency at which the event takes place",
+  repeats_on VARCHAR(50) COMMENT "Days the event is repeated in a week. Verranno inseriti nel DB il numero del giorno separato da ;",
   PRIMARY KEY (id),
   INDEX FK_event_type_category_idx (id_category ASC),
   CONSTRAINT FK_event_type_category FOREIGN KEY (id_category) REFERENCES wilson_db.event_category (id) ON DELETE NO ACTION ON UPDATE CASCADE
@@ -256,16 +256,35 @@ CREATE TABLE wilson_db.event_update(
   CONSTRAINT FK_event_update_health_status FOREIGN KEY (id_health_status) REFERENCES wilson_db.health_status (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE wilson_db.primary_need(
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  created_on TIMESTAMP NULL COMMENT "Datetime when the event was created",
+  id_resident INT UNSIGNED NULL COMMENT "Resident that the primary need information is referred",
+  id_type INT UNSIGNED NULL COMMENT "Type of primary need event",
+  staff_comment INT UNSIGNED NULL COMMENT "Comments of the RSA Staff on the event",
+  PRIMARY KEY (id),
+  INDEX FK_primary_need_resident_idx (id_resident ASC),
+  INDEX FK_primary_need_type_idx (id_type ASC),
+  INDEX FK_primary_need_staff_comment_idx (staff_comment ASC),
+  CONSTRAINT FK_primary_need_resident FOREIGN KEY (id_resident) REFERENCES wilson_db.resident (id) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT FK_primary_need_type FOREIGN KEY (id_type) REFERENCES wilson_db.event_type (id) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT FK_primary_need_staff_comment FOREIGN KEY (staff_comment) REFERENCES wilson_db.comment (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE wilson_db.event_extra_param(
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   name VARCHAR(100) NULL COMMENT "Name of the event parameter (as displayed)",
-  descre_text VARCHAR(100) NULL COMMENT "Value of the parameter if in textual form",
-  viption VARCHAR(1000) NULL COMMENT "Description of the event parameter",
-  valualue_num INT NULL COMMENT "Value of the parameter if in numeric form",
+  description VARCHAR(1000) NULL COMMENT "Description of the event parameter",
+  value_text VARCHAR(100) NULL COMMENT "Value of the parameter if in textual form",
+  value_num INT NULL COMMENT "Value of the parameter if in numeric form",
   created_by INT UNSIGNED NOT NULL,
+  id_primary_need INT UNSIGNED NULL,
   id_health_status INT UNSIGNED NULL,
   id_event_update INT UNSIGNED NULL,
   PRIMARY KEY (id),
+  INDEX FK_event_extra_param_primary_need_idx (id_primary_need ASC),
+  CONSTRAINT FK_event_extra_param_primary_need FOREIGN KEY (id_primary_need) REFERENCES wilson_db.primary_need (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  
   INDEX FK_event_extra_param_staff_idx (created_by ASC),
   CONSTRAINT FK_event_extra_param_staff FOREIGN KEY (created_by) REFERENCES wilson_db.staff (id) ON DELETE NO ACTION ON UPDATE CASCADE,
   INDEX FK_event_extra_param_health_status_idx (id_health_status ASC),
@@ -274,20 +293,4 @@ CREATE TABLE wilson_db.event_extra_param(
   CONSTRAINT FK_event_extra_param_update FOREIGN KEY (id_event_update) REFERENCES wilson_db.event_update (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE wilson_db.primary_need(
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  created_on TIMESTAMP NULL COMMENT "Datetime when the event was created",
-  id_resident INT UNSIGNED NULL COMMENT "Resident that the primary need information is referred",
-  id_type INT UNSIGNED NULL COMMENT "Type of primary need event",
-  staff_comment INT UNSIGNED NULL COMMENT "Comments of the RSA Staff on the event",
-  indicator INT UNSIGNED NULL COMMENT "Main numeric indicator summarising the event",
-  PRIMARY KEY (id),
-  INDEX FK_primary_need_resident_idx (id_resident ASC),
-  INDEX FK_primary_need_type_idx (id_type ASC),
-  INDEX FK_primary_need_staff_comment_idx (staff_comment ASC),
-  INDEX FK_primary_need_indicator_idx (indicator ASC),
-  CONSTRAINT FK_primary_need_resident FOREIGN KEY (id_resident) REFERENCES wilson_db.resident (id) ON DELETE NO ACTION ON UPDATE CASCADE,
-  CONSTRAINT FK_primary_need_type FOREIGN KEY (id_type) REFERENCES wilson_db.event_type (id) ON DELETE NO ACTION ON UPDATE CASCADE,
-  CONSTRAINT FK_primary_need_staff_comment FOREIGN KEY (staff_comment) REFERENCES wilson_db.comment (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT FK_primary_need_indicator FOREIGN KEY (indicator) REFERENCES wilson_db.event_extra_param (id) ON DELETE NO ACTION ON UPDATE CASCADE
-);
+
