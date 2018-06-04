@@ -61,7 +61,7 @@ insert into resident (id,first_name,last_name,gender,birthday,id_rsa,cod_utente)
 insert into resident (id,first_name,last_name,gender,birthday,id_rsa,cod_utente) values (836,"Chiara","Caruso",'female','1926/01/16',1,836);
 insert into resident (id,first_name,last_name,gender,birthday,id_rsa,cod_utente) values (844,"Angelo","Ferretti",'male','1921/07/27',1,844);
 insert into resident (id,first_name,last_name,gender,birthday,id_rsa,cod_utente) values (847,"Riccardo","Valentini",'male','1941/09/27',1,847);
-insert into resident (id,first_name,last_name,gender,birthday,id_rsa,cod_utente) values (851,"Erica","Alfieri",'female','1938/02/28',1,851);
+insert into resident (id,first_name,last_name,gender,birthday,id_rsa,cod_utente) values (851,"Agata","Alfieri",'female','1938/02/28',1,851);
 insert into resident (id,first_name,last_name,gender,birthday,id_rsa,cod_utente) values (863,"Roberta","Amato",'female','1923/12/14',1,863);
 insert into resident (id,first_name,last_name,gender,birthday,id_rsa,cod_utente) values (864,"Noemi","Costa",'female','1917/05/10',1,864);
 insert into resident (id,first_name,last_name,gender,birthday,id_rsa,cod_utente) values (865,"Valerio","Amato",'male','1915/01/17',1,865);
