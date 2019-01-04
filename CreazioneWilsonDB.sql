@@ -4,6 +4,7 @@ CREATE TABLE wilson_db.rsa (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   name VARCHAR(100) NULL,
   description VARCHAR(1000) NULL,
+  id_dm7 VARCHAR(1000) NOT NULL UNIQUE,
   PRIMARY KEY (id)
 );
 
@@ -38,6 +39,7 @@ CREATE TABLE wilson_db.staff (
   last_name VARCHAR(100) NULL,
   picture VARCHAR(100) NULL,
   mail VARCHAR(100) NULL,
+  username VARCHAR(100) NOT NULL UNIQUE,
   password VARCHAR(100) NULL,
   id_role INT UNSIGNED NULL,
   id_rsa INT UNSIGNED NULL,
@@ -48,19 +50,28 @@ CREATE TABLE wilson_db.staff (
   CONSTRAINT FK_staff_rsa FOREIGN KEY (id_rsa) REFERENCES wilson_db.rsa (id) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
+CREATE TABLE wilson_db.kinship (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  description VARCHAR(100) NULL,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE wilson_db.relative (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   first_name VARCHAR(100) NULL,
   last_name VARCHAR(100) NULL,
   picture VARCHAR(100) NULL,
   mail VARCHAR(100) NULL,
+  username VARCHAR(100) NOT NULL UNIQUE,
   password VARCHAR(100) NULL,
-  kinship VARCHAR(100) NULL,
+  id_kinship INT UNSIGNED NULL,
   is_primary TINYINT(1) NULL,
   id_resident INT UNSIGNED NULL,
   PRIMARY KEY (id),
   INDEX FK_relative_resident_idx (id_resident ASC),
-  CONSTRAINT FK_relative_resident FOREIGN KEY (id_resident) REFERENCES wilson_db.resident (id) ON DELETE NO ACTION ON UPDATE CASCADE
+  CONSTRAINT FK_relative_resident FOREIGN KEY (id_resident) REFERENCES wilson_db.resident (id) ON DELETE NO ACTION ON UPDATE CASCADE,
+  INDEX FK_relative_kinship_idx (id_kinship ASC),
+  CONSTRAINT FK_relative_kinship FOREIGN KEY (id_kinship) REFERENCES wilson_db.kinship (id) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
 CREATE TABLE wilson_db.contact_info (
