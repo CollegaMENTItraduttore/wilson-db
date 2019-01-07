@@ -304,4 +304,17 @@ CREATE TABLE wilson_db.event_extra_param(
   CONSTRAINT FK_event_extra_param_update FOREIGN KEY (id_event_update) REFERENCES wilson_db.event_update (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE wilson_db.pai_resoconto(
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  created_by INT UNSIGNED NULL,
+  created_on TIMESTAMP NOT NULL COMMENT "Data di creazione del resoconto",
+  id_resident INT UNSIGNED NULL COMMENT "Resident that the PAI information is referred",
+  note VARCHAR(10000) NOT NULL COMMENT "The content of the comment",
+  PRIMARY KEY (id),
+  INDEX FK_pai_resoconto_resident_idx (id_resident ASC),
+  INDEX FK_pai_resoconto_staff_idx (created_by ASC),
+  CONSTRAINT FK_pai_resoconto_resident FOREIGN KEY (id_resident) REFERENCES wilson_db.resident (id) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT FK_pai_resoconto_staff FOREIGN KEY (created_by) REFERENCES wilson_db.staff (id) ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
 
