@@ -43,6 +43,7 @@ CREATE TABLE wilson_db.staff (
   password VARCHAR(100) NULL,
   id_role INT UNSIGNED NULL,
   id_rsa INT UNSIGNED NULL,
+  id_teanapers INT UNSIGNED NULL,
   PRIMARY KEY (id),
   INDEX FK_staff_role_idx (id_role ASC),
   INDEX FK_staff_rsa_idx (id_rsa ASC),
@@ -315,6 +316,15 @@ CREATE TABLE wilson_db.pai_resoconto(
   INDEX FK_pai_resoconto_staff_idx (created_by ASC),
   CONSTRAINT FK_pai_resoconto_resident FOREIGN KEY (id_resident) REFERENCES wilson_db.resident (id) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT FK_pai_resoconto_staff FOREIGN KEY (created_by) REFERENCES wilson_db.staff (id) ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+CREATE TABLE wilson_db.team_cura (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  nominativo VARCHAR(500) NULL,
+  figuraProfessionale VARCHAR(500) NULL,
+  is_family_navigator TINYINT(1) NULL,
+  id_teanapers INT UNSIGNED NULL,
+  PRIMARY KEY (id)
 );
 
 
