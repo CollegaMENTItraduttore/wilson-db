@@ -115,6 +115,7 @@ CREATE TABLE wilson_db.activity_info (
   description VARCHAR(1000) NULL,
   benefits VARCHAR(1000) NULL,
   id_activity_category INT UNSIGNED NOT NULL,
+  id_activity_sipcar INT UNSIGNED NOT NULL,
   PRIMARY KEY (id),
   INDEX FK_activity_category_idx (id_activity_category ASC),
   CONSTRAINT FK_activity_category FOREIGN KEY (id_activity_category) REFERENCES wilson_db.activity_category (id) ON DELETE NO ACTION ON UPDATE CASCADE
@@ -133,6 +134,7 @@ CREATE TABLE wilson_db.activity (
   can_request_appointment TINYINT(1) NULL,
   organized_by INT UNSIGNED NULL,
   id_resident INT UNSIGNED NULL,
+  id_plan_sipcar INT UNSIGNED NOT NULL,
   PRIMARY KEY (id),
   INDEX FK_activity_info_idx (id_activity_info ASC),
   INDEX FK_activity_resident_idx (id_resident ASC),
@@ -318,12 +320,13 @@ CREATE TABLE wilson_db.pai_resoconto(
   CONSTRAINT FK_pai_resoconto_staff FOREIGN KEY (created_by) REFERENCES wilson_db.staff (id) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
-CREATE TABLE wilson_db.team_cura (
+CREATE TABLE wilson_db.care_team (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  nominativo VARCHAR(500) NULL COMMENT "Nome dell'operatore",
-  figura_professionale VARCHAR(500) NULL COMMENT "Figura professionale dell'operatore",
+  nominativo VARCHAR(100) NULL COMMENT "Nome dell'operatore",
+  figura_professionale VARCHAR(100) NULL COMMENT "Figura professionale dell'operatore",
   is_family_navigator TINYINT(1) NULL COMMENT "Check se l'operatore ha il ruolo di family navigator",
   id_teanapers INT UNSIGNED NULL COMMENT "Identificativo dell'operatore sul DB Sipcar",
+  id_resident INT UNSIGNED NULL COMMENT "Residente a cui è collegato il team di cura",
   PRIMARY KEY (id)
 );
 
@@ -331,13 +334,13 @@ CREATE TABLE wilson_db.sent_message (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   id_relative INT UNSIGNED NULL COMMENT "Familiare che ha inviato la richiesta di contatto",
   sent_on TIMESTAMP NULL COMMENT "Data di invio del messaggio",
-  id_team_cura INT UNSIGNED NULL COMMENT "Operatore a cui è stato mandato il messaggio",
+  id_care_team INT UNSIGNED NULL COMMENT "Operatore a cui è stato mandato il messaggio",
   message VARCHAR(10000) NULL COMMENT "Testo del messaggio scritto dal familiare",
   PRIMARY KEY (id),
   INDEX FK_sent_message_id_relative_idx (id_relative ASC),
   CONSTRAINT FK_sent_message_id_relative FOREIGN KEY (id_relative) REFERENCES wilson_db.relative (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  INDEX FK_sent_message_id_team_cura_idx (id_team_cura ASC),
-  CONSTRAINT FK_sent_message_id_team_cura FOREIGN KEY (id_team_cura) REFERENCES wilson_db.team_cura (id) ON DELETE CASCADE ON UPDATE CASCADE
+  INDEX FK_sent_message_id_care_team_idx (id_care_team ASC),
+  CONSTRAINT FK_sent_message_id_care_team FOREIGN KEY (id_care_team) REFERENCES wilson_db.care_team (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
