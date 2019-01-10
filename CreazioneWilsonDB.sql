@@ -320,11 +320,24 @@ CREATE TABLE wilson_db.pai_resoconto(
 
 CREATE TABLE wilson_db.team_cura (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  nominativo VARCHAR(500) NULL,
-  figuraProfessionale VARCHAR(500) NULL,
-  is_family_navigator TINYINT(1) NULL,
-  id_teanapers INT UNSIGNED NULL,
+  nominativo VARCHAR(500) NULL COMMENT "Nome dell'operatore",
+  figura_professionale VARCHAR(500) NULL COMMENT "Figura professionale dell'operatore",
+  is_family_navigator TINYINT(1) NULL COMMENT "Check se l'operatore ha il ruolo di family navigator",
+  id_teanapers INT UNSIGNED NULL COMMENT "Identificativo dell'operatore sul DB Sipcar",
   PRIMARY KEY (id)
+);
+
+CREATE TABLE wilson_db.sent_message (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  id_relative INT UNSIGNED NULL COMMENT "Familiare che ha inviato la richiesta di contatto",
+  sent_on TIMESTAMP NULL COMMENT "Data di invio del messaggio",
+  id_team_cura INT UNSIGNED NULL COMMENT "Operatore a cui è stato mandato il messaggio",
+  message VARCHAR(10000) NULL COMMENT "Testo del messaggio scritto dal familiare",
+  PRIMARY KEY (id),
+  INDEX FK_sent_message_id_relative_idx (id_relative ASC),
+  CONSTRAINT FK_sent_message_id_relative FOREIGN KEY (id_relative) REFERENCES wilson_db.relative (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  INDEX FK_sent_message_id_team_cura_idx (id_team_cura ASC),
+  CONSTRAINT FK_sent_message_id_team_cura FOREIGN KEY (id_team_cura) REFERENCES wilson_db.team_cura (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
