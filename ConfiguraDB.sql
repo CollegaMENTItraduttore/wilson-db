@@ -1,6 +1,6 @@
 #------------------------------------        RSA        ------------------------------------#
 #RSA
-insert into env_cm_5bd5e0f96ba9aa7645372db3.rsa (name, id_dm7) values ("Casa del Benessere - A.P.S.P.",'env_cm_5bd5e0f96ba9aa7645372db3');
+insert into env_cm_5bd5e0f96ba9aa7645372db3.rsa (name, id_dm7) values ("Casa del Benessere - A.P.S.P.",'5bd5e0f96ba9aa7645372db3');
 #------------------------------------        FINE RSA        ------------------------------------#
 
 #------------------------------------        FIGURE PROFESSIONALI        ------------------------------------#
