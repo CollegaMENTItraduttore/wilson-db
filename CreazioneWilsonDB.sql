@@ -115,7 +115,7 @@ CREATE TABLE wilson_db.activity_info (
   description VARCHAR(1000) NULL,
   benefits VARCHAR(1000) NULL,
   id_activity_category INT UNSIGNED NOT NULL,
-  id_activity_sipcar INT UNSIGNED NOT NULL,
+  id_activity_sipcar INT NOT NULL,
   PRIMARY KEY (id),
   INDEX FK_activity_category_idx (id_activity_category ASC),
   CONSTRAINT FK_activity_category FOREIGN KEY (id_activity_category) REFERENCES wilson_db.activity_category (id) ON DELETE NO ACTION ON UPDATE CASCADE
