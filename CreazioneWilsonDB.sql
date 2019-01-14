@@ -276,6 +276,7 @@ CREATE TABLE wilson_db.primary_need(
   id_resident INT UNSIGNED NULL COMMENT "Resident that the primary need information is referred",
   id_type INT UNSIGNED NULL COMMENT "Type of primary need event",
   staff_comment INT UNSIGNED NULL COMMENT "Comments of the RSA Staff on the event",
+  id_primary_need_sipcar INT UNSIGNED NULL COMMENT "Id del record sul DB Sipcar 1.0",
   PRIMARY KEY (id),
   INDEX FK_primary_need_resident_idx (id_resident ASC),
   INDEX FK_primary_need_type_idx (id_type ASC),
