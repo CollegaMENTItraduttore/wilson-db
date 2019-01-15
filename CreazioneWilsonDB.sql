@@ -337,6 +337,7 @@ CREATE TABLE wilson_db.sent_message (
   sent_on TIMESTAMP NULL COMMENT "Data di invio del messaggio",
   id_care_team INT UNSIGNED NULL COMMENT "Operatore a cui è stato mandato il messaggio",
   message VARCHAR(10000) NULL COMMENT "Testo del messaggio scritto dal familiare",
+  shared_on TIMESTAMP NULL COMMENT "Data di condivisione interna alla struttura col destinatario",
   PRIMARY KEY (id),
   INDEX FK_sent_message_id_relative_idx (id_relative ASC),
   CONSTRAINT FK_sent_message_id_relative FOREIGN KEY (id_relative) REFERENCES wilson_db.relative (id) ON DELETE CASCADE ON UPDATE CASCADE,
