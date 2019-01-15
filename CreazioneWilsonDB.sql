@@ -292,7 +292,7 @@ CREATE TABLE wilson_db.event_extra_param(
   description VARCHAR(1000) NULL COMMENT "Description of the event parameter",
   value_text VARCHAR(100) NULL COMMENT "Value of the parameter if in textual form",
   value_num INT NULL COMMENT "Value of the parameter if in numeric form",
-  created_by INT UNSIGNED NOT NULL,
+  created_by INT UNSIGNED NULL,
   id_primary_need INT UNSIGNED NULL,
   id_health_status INT UNSIGNED NULL,
   id_event_update INT UNSIGNED NULL,
@@ -344,5 +344,3 @@ CREATE TABLE wilson_db.sent_message (
   INDEX FK_sent_message_id_care_team_idx (id_care_team ASC),
   CONSTRAINT FK_sent_message_id_care_team FOREIGN KEY (id_care_team) REFERENCES wilson_db.care_team (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-
